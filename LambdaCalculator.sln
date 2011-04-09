@@ -1,0 +1,50 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NorthHorizon.LambdaCalculator.WinClient", "NorthHorizon.LambdaCalculator.WinClient\NorthHorizon.LambdaCalculator.WinClient.csproj", "{FD0C74EC-42B0-47B1-9F05-2F69BE7DB716}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NorthHorizon.LambdaCalculator.UI.Library", "NorthHorizon.LambdaCalculator.UI.Library\NorthHorizon.LambdaCalculator.UI.Library.csproj", "{1FE7FA4E-055E-427A-88FC-D54AACA3E619}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NorthHorizon.LambdaCalculator.UI.Design", "NorthHorizon.LambdaCalculator.UI.Design\NorthHorizon.LambdaCalculator.UI.Design.csproj", "{E205CCB4-FE20-4E61-B013-68FC7DDC83D2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NorthHorizon.LambdaCalculator.UI.Modules", "NorthHorizon.LambdaCalculator.UI.Modules\NorthHorizon.LambdaCalculator.UI.Modules.csproj", "{001C3B9B-B7FE-4580-AC1E-8095947317EB}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "NorthHorizon.LambdaCalculator.Languages.UntypedLambda", "NorthHorizon.LambdaCalculator.Languages.UntypedLambda\NorthHorizon.LambdaCalculator.Languages.UntypedLambda.fsproj", "{64B0E83E-0A6E-4915-9027-85D4E477D99E}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "NorthHorizon.LambdaCalculator.Languages.SystemF", "NorthHorizon.LambdaCalculator.Languages.SystemF\NorthHorizon.LambdaCalculator.Languages.SystemF.fsproj", "{B0D9C8B8-B88B-4EF9-BCBA-29B9BBC33AC3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FD0C74EC-42B0-47B1-9F05-2F69BE7DB716}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD0C74EC-42B0-47B1-9F05-2F69BE7DB716}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD0C74EC-42B0-47B1-9F05-2F69BE7DB716}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD0C74EC-42B0-47B1-9F05-2F69BE7DB716}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1FE7FA4E-055E-427A-88FC-D54AACA3E619}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1FE7FA4E-055E-427A-88FC-D54AACA3E619}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1FE7FA4E-055E-427A-88FC-D54AACA3E619}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1FE7FA4E-055E-427A-88FC-D54AACA3E619}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E205CCB4-FE20-4E61-B013-68FC7DDC83D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E205CCB4-FE20-4E61-B013-68FC7DDC83D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E205CCB4-FE20-4E61-B013-68FC7DDC83D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E205CCB4-FE20-4E61-B013-68FC7DDC83D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{001C3B9B-B7FE-4580-AC1E-8095947317EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{001C3B9B-B7FE-4580-AC1E-8095947317EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{001C3B9B-B7FE-4580-AC1E-8095947317EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{001C3B9B-B7FE-4580-AC1E-8095947317EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{64B0E83E-0A6E-4915-9027-85D4E477D99E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64B0E83E-0A6E-4915-9027-85D4E477D99E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64B0E83E-0A6E-4915-9027-85D4E477D99E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64B0E83E-0A6E-4915-9027-85D4E477D99E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0D9C8B8-B88B-4EF9-BCBA-29B9BBC33AC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0D9C8B8-B88B-4EF9-BCBA-29B9BBC33AC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0D9C8B8-B88B-4EF9-BCBA-29B9BBC33AC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0D9C8B8-B88B-4EF9-BCBA-29B9BBC33AC3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

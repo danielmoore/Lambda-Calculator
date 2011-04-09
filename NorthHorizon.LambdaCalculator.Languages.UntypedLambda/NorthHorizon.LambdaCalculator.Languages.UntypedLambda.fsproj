@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<PropertyGroup>
+		<Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+		<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+		<ProductVersion>8.0.30703</ProductVersion>
+		<SchemaVersion>2.0</SchemaVersion>
+		<ProjectGuid>{64b0e83e-0a6e-4915-9027-85d4e477d99e}</ProjectGuid>
+		<OutputType>Library</OutputType>
+		<RootNamespace>NorthHorizon.LambdaCalculator.Languages.UntypedLambda</RootNamespace>
+		<AssemblyName>NorthHorizon.LambdaCalculator.Languages.UntypedLambda</AssemblyName>
+		<TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+		<Name>NorthHorizon.LambdaCalculator.Languages.UntypedLambda</Name>
+		<SccProjectName>SAK</SccProjectName>
+		<SccProvider>SAK</SccProvider>
+		<SccAuxPath>SAK</SccAuxPath>
+		<SccLocalPath>SAK</SccLocalPath>
+		<TargetFrameworkProfile>Client</TargetFrameworkProfile>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+		<DebugSymbols>true</DebugSymbols>
+		<DebugType>full</DebugType>
+		<Optimize>false</Optimize>
+		<Tailcalls>false</Tailcalls>
+		<OutputPath>bin\Debug\</OutputPath>
+		<DefineConstants>DEBUG;TRACE</DefineConstants>
+		<WarningLevel>3</WarningLevel>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+		<DebugType>pdbonly</DebugType>
+		<Optimize>true</Optimize>
+		<Tailcalls>true</Tailcalls>
+		<OutputPath>bin\Release\</OutputPath>
+		<DefineConstants>TRACE</DefineConstants>
+		<WarningLevel>3</WarningLevel>
+	</PropertyGroup>
+	<Import Project="$(MSBuildExtensionsPath32)\..\Microsoft F#\v4.0\Microsoft.FSharp.Targets" />
+	<Import Project="$(MSBuildExtensionsPath32)\..\FSharpPowerPack-2.0.0.0\bin\FSharp.PowerPack.targets" />
+	<PropertyGroup>
+		<FsLexOutputFolder>$(IntermediateOutputPath)</FsLexOutputFolder>
+		<FsYaccOutputFolder>$(IntermediateOutputPath)</FsYaccOutputFolder>
+	</PropertyGroup>
+	<ItemGroup>
+		<Compile Include="Types.fs" />
+		<Compile Include="$(IntermediateOutputPath)\Parsing.fs">
+			<Visible>false</Visible>
+			<Link>Parsing.fs</Link>
+		</Compile>
+		<Compile Include="$(IntermediateOutputPath)\Lexing.fs">
+			<Visible>false</Visible>
+			<Link>Lexing.fs</Link>
+		</Compile>
+		<FsYacc Include="Parsing.fsp">
+			<OtherFlags>--module NorthHorizon.LambdaCalculator.Languages.UntypedLambda.Parsing --open NorthHorizon.LambdaCalculator.Languages.UntypedLambda.Types</OtherFlags>
+		</FsYacc>
+		<FsLex Include="Lexing.fsl">
+			<OtherFlags>--unicode</OtherFlags>
+		</FsLex>
+		<Compile Include="Execution.fs" />
+	</ItemGroup>
+	<ItemGroup>
+		<Reference Include="FSharp.Core" />
+		<Reference Include="FSharp.PowerPack">
+			<HintPath>%ProgramFiles(x86)%\FSharpPowerPack-2.0.0.0\bin\FSharp.PowerPack.dll</HintPath>
+		</Reference>
+		<Reference Include="mscorlib" />
+		<Reference Include="System" />
+		<Reference Include="System.Core">
+			<RequiredTargetFramework>3.5</RequiredTargetFramework>
+		</Reference>
+	</ItemGroup>
+	<!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+	     Other similar extension points exist, see Microsoft.Common.targets.
+	<Target Name="BeforeBuild">
+	</Target>
+	<Target Name="AfterBuild">
+	</Target>
+	-->
+	<PropertyGroup>
+		<PreBuildEvent>
+		</PreBuildEvent>
+	</PropertyGroup>
+</Project>

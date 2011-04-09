@@ -1,0 +1,69 @@
+﻿<ResourceDictionary
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:aero="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero"
+	xmlns:l="http://schemas.northhorizon.net/lambdacalculator/library"
+	xmlns:controls="clr-namespace:NorthHorizon.LambdaCalculator.UI.Design.Controls">
+	
+	<DataTemplate x:Key="CharacterButtonContentTemplate" DataType="{x:Type l:Character}">
+		<Viewbox Stretch="Uniform">
+			<TextBlock Text="{Binding Value}" FontFamily="Consolas"/>
+		</Viewbox>
+	</DataTemplate>
+
+	<DataTemplate x:Key="CharacterButtonPopupValueContentTemplate" DataType="{x:Type l:Character}">
+		<Border Background="#FF82A7DC" CornerRadius="3" Height="{Binding ActualWidth, RelativeSource={RelativeSource Self}}" MinWidth="20">
+			<Viewbox Stretch="Uniform">
+				<TextBlock Text="{Binding Value}" Foreground="White" FontFamily="Consolas"/>
+			</Viewbox>
+		</Border>
+	</DataTemplate>
+
+	<DataTemplate x:Key="CharacterButtonPopupNameContentTemplate" DataType="{x:Type l:Character}">
+		<Border Background="#FF2D304B" BorderBrush="#FFD7D6EA" BorderThickness="1" CornerRadius="3" Margin="0,3,0,0">
+			<TextBlock Text="{Binding Name}" Foreground="White" FontFamily="Arial Narrow" FontSize="9" Margin="2" HorizontalAlignment="Center"/>
+		</Border>
+	</DataTemplate>
+	
+	<ControlTemplate x:Key="CharacterButtonTemplate" TargetType="{x:Type Button}">
+		<Grid>
+			<aero:ButtonChrome x:Name="Chrome" SnapsToDevicePixels="True" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" RenderDefaulted="{TemplateBinding Button.IsDefaulted}" RenderMouseOver="{TemplateBinding IsMouseOver}" RenderPressed="{TemplateBinding IsPressed}">
+				<ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" ContentTemplate="{TemplateBinding ContentTemplate}" RecognizesAccessKey="True"/>
+			</aero:ButtonChrome>
+			<Popup AllowsTransparency="True" Placement="Center" VerticalOffset="5"
+				   IsOpen="{TemplateBinding IsMouseOver}"  PopupAnimation="Fade">
+				<controls:HitTestDirector TargetElement="{Binding ElementName=Chrome}">
+					<DockPanel>
+						<ContentPresenter
+							Name="CharacterPopupName" MinWidth="50" DockPanel.Dock="Bottom"
+							ContentTemplate="{StaticResource CharacterButtonPopupNameContentTemplate}"/>
+						<ContentPresenter 
+							Name="CharacterPopupValue" Width="50"
+							ContentTemplate="{StaticResource CharacterButtonPopupValueContentTemplate}"/>
+					</DockPanel>
+				</controls:HitTestDirector>
+			</Popup>
+		</Grid>
+		<ControlTemplate.Triggers>
+			<Trigger Property="IsKeyboardFocused" Value="True">
+				<Setter Property="RenderDefaulted" TargetName="Chrome" Value="True"/>
+			</Trigger>
+			<Trigger Property="ToggleButton.IsChecked" Value="True">
+				<Setter Property="RenderPressed" TargetName="Chrome" Value="True"/>
+			</Trigger>
+			<Trigger Property="IsEnabled" Value="False">
+				<Setter Property="Foreground" Value="#FFADADAD"/>
+			</Trigger>
+		</ControlTemplate.Triggers>
+	</ControlTemplate>
+
+	<Style x:Key="CharacterButtonStyle" TargetType="{x:Type Button}">
+		<Setter Property="ContentTemplate" Value="{StaticResource CharacterButtonContentTemplate}"/>
+		<Setter Property="Template" Value="{StaticResource CharacterButtonTemplate}"/>
+		<Setter Property="Width" Value="20"/>
+		<Setter Property="Height" Value="20"/>
+		<Setter Property="Margin" Value="1"/>
+		<Setter Property="Command" Value="l:CalculatorCommands.InputCharacter"/>
+		<Setter Property="CommandParameter" Value="{Binding Content, RelativeSource={RelativeSource Self}}"/>
+	</Style>
+</ResourceDictionary>

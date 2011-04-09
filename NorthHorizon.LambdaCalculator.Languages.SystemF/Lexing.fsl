@@ -1,0 +1,61 @@
+﻿{
+module NorthHorizon.LambdaCalculator.Languages.SystemF.Lexing
+
+open System
+open NorthHorizon.LambdaCalculator.Languages.SystemF.Parsing
+open Microsoft.FSharp.Text.Lexing
+
+let lexeme = LexBuffer<char>.LexemeString
+}
+
+let alpha = ['a'-'z' 'A'-'Z' 'α'-'κ' 'ξ'-'ω' 'Α'-'Κ' 'Μ'-'Ω']
+let number = ['0'-'9']+
+let subscript = ['₀'-'₉']+
+let varname = alpha (number | subscript)?
+
+let whitespace = (' ' | '\t' | '\n' | '\r')+
+
+rule tokenize = parse
+| whitespace					{ tokenize lexbuf }
+| '+'							{ PLUS }
+| '-'							{ MINUS }
+| '×' | '*'						{ PRODUCT }
+| '÷' | '/'						{ DIVIDE }
+| "&&"							{ CONJ }
+| "||"							{ DISJ }
+| '<'							{ LT }
+| '≤' | "<="					{ LTE }
+| '>'							{ GT }
+| '≥' | ">="					{ GTE }
+| '='							{ EQ }
+| '≠' | "!="					{ NEQ }
+| "int"							{ INT }
+| "bool"						{ BOOL }
+| "unit"						{ UNIT }
+| "void"						{ VOID }
+| '→' | "->"					{ ARROW }
+| '∀'							{ FORALL }
+| "true"						{ TRUE }
+| "false"						{ FALSE }
+| "()"							{ UNITVAL }
+| "in"							{ INJ }
+| "case" whitespace				{ CASE }
+| whitespace "of" whitespace	{ OF }
+| 'π'							{ PROJ }
+| 'μ'							{ MU }
+| 'λ'							{ LAMBDA }
+| 'Λ'							{ CAPITALLAMBDA }
+| '['							{ LBRACKET }
+| ']'							{ RBRACKET }
+| '('							{ LPAREN }
+| ')'							{ RPAREN }
+| '.'							{ DOT }
+| ','							{ COMMA }
+| ':'							{ COLON }
+| '|'							{ PIPE }
+| '^'							{ CARET }
+| '₁' | "_1"					{ SUB1 }
+| '₂' | "_2"					{ SUB2 }
+| number						{ INTVAL (Int32.Parse(lexeme lexbuf)) }
+| varname						{ VARNAME (lexeme lexbuf) }
+| eof							{ EOF }

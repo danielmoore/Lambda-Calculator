@@ -1,0 +1,6 @@
+﻿<ResourceDictionary
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:l="http://schemas.northhorizon.net/lambdacalculator/library">
+	<l:StringToVisibilityConverter x:Key="StringToVisibilityConverter"/>
+</ResourceDictionary>

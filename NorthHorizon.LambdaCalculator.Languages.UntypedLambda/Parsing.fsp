@@ -1,0 +1,26 @@
+﻿%{
+%}
+
+%token LPAREN RPAREN
+%token LAMBDA DOT
+%token <string> VARNAME
+%token EOF
+
+%left ABS
+%left APP
+%nonassoc PAREN
+
+%start start
+%type <Expr> start
+
+%%
+
+start: Expr EOF { $1 }
+
+Expr:
+| LPAREN Expr RPAREN  %prec PAREN    { $2 }
+| LAMBDA VARNAME DOT Expr %prec ABS  { Abs ($2, $4) }
+| Expr Expr %prec APP                { App ($1, $2) }
+| VARNAME                            { Var $1 }
+
+%%

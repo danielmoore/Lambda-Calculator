@@ -1,0 +1,136 @@
+﻿<ResourceDictionary
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:aero="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero"
+	xmlns:l="http://schemas.northhorizon.net/lambdacalculator/library" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d">
+	
+	<ControlTemplate x:Key="CalculatorExpanderHeaderControlTemplate" TargetType="{x:Type ToggleButton}">
+		<Grid>
+			<aero:ButtonChrome
+				Background="{TemplateBinding Background}"
+				BorderBrush="{TemplateBinding BorderBrush}"
+				RenderDefaulted="{TemplateBinding Button.IsDefaulted}"
+				RenderMouseOver="{TemplateBinding IsMouseOver}"
+				RenderPressed="{TemplateBinding IsPressed}"
+				SnapsToDevicePixels="true"/>
+			<Border Margin="{TemplateBinding Padding}">
+				<DockPanel Margin="0,2">
+					<Border x:Name="Arrow"
+						Background="Transparent" VerticalAlignment="Center"
+						Margin="2" Width="10" Height="10" RenderTransformOrigin="0.5,0.5">
+						<Border.RenderTransform>
+							<RotateTransform Angle="-90"/>
+						</Border.RenderTransform>
+						<Path Data="M6.745098,1.2068182 L4,10.593181 1.254902,1.2068182 z"
+							Stretch="Fill" StrokeThickness="2" Width="7" Height="8"
+							Fill="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}"
+							VerticalAlignment="Center"/>
+					</Border>
+					<ContentPresenter VerticalAlignment="Center"/>
+				</DockPanel>
+			</Border>
+		</Grid>
+		<ControlTemplate.Triggers>
+			<Trigger Property="IsChecked" Value="True">
+				<Trigger.EnterActions>
+					<BeginStoryboard>
+						<Storyboard>
+							<DoubleAnimation
+								From="-90" To="0" Duration="0:0:0.1"
+								Storyboard.TargetName="Arrow"
+								Storyboard.TargetProperty="RenderTransform.Angle"/>
+						</Storyboard>
+					</BeginStoryboard>
+				</Trigger.EnterActions>
+				
+				<Trigger.ExitActions>
+					<BeginStoryboard>
+						<Storyboard>
+							<DoubleAnimation
+								From="0" To="-90" Duration="0:0:0.1"
+								Storyboard.TargetName="Arrow"
+								Storyboard.TargetProperty="RenderTransform.Angle"/>
+						</Storyboard>
+					</BeginStoryboard>
+				</Trigger.ExitActions>
+			</Trigger>
+		</ControlTemplate.Triggers>
+	</ControlTemplate>
+	
+	<ControlTemplate x:Key="CalculatorExpanderControlTemplate" TargetType="{x:Type Expander}">
+		<DockPanel>
+			<ToggleButton
+				DockPanel.Dock="Top" Padding="{TemplateBinding Padding}"
+				VerticalAlignment="Top"
+				IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+				Content="{TemplateBinding Header}"
+				ContentTemplate="{TemplateBinding HeaderTemplate}"
+				ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
+				Template="{StaticResource CalculatorExpanderHeaderControlTemplate}"/>
+			
+			<ContentPresenter x:Name="Content" Focusable="False"
+				Margin="{TemplateBinding Padding}" Opacity="0">
+				<ContentPresenter.LayoutTransform>
+					<ScaleTransform ScaleY="0"/>
+				</ContentPresenter.LayoutTransform>	
+			</ContentPresenter>
+		</DockPanel>
+		
+		<ControlTemplate.Triggers>
+			<Trigger Property="IsExpanded" Value="True">			
+				<Trigger.EnterActions>
+					<BeginStoryboard>
+						<Storyboard>
+							<DoubleAnimation
+								From="0" To="1" Duration="0:0:0.15"
+								Storyboard.TargetName="Content"
+								Storyboard.TargetProperty="LayoutTransform.ScaleY"/>
+							<DoubleAnimation
+								From="0" To="1"
+								BeginTime="0:0:0.15" Duration="0:0:0.2"
+								Storyboard.TargetName="Content"
+								Storyboard.TargetProperty="Opacity"/>
+						</Storyboard>
+					</BeginStoryboard>
+				</Trigger.EnterActions>
+				
+				<Trigger.ExitActions>
+					<BeginStoryboard>
+						<Storyboard>
+							<DoubleAnimation
+								From="1" To="0" Duration="0:0:0.2"
+								Storyboard.TargetName="Content"
+								Storyboard.TargetProperty="Opacity"/>
+							<DoubleAnimation
+								From="1" To="0"
+								BeginTime="0:0:0.2" Duration="0:0:0.15"
+								Storyboard.TargetName="Content"
+								Storyboard.TargetProperty="LayoutTransform.ScaleY"/>
+						</Storyboard>
+					</BeginStoryboard>
+				</Trigger.ExitActions>
+			</Trigger>
+		</ControlTemplate.Triggers>
+	</ControlTemplate>
+	
+	<Style x:Key="CalculatorExpanderStyle" TargetType="{x:Type Expander}">
+		<Setter Property="Template" Value="{StaticResource CalculatorExpanderControlTemplate}"/>
+	</Style>
+	
+	<DataTemplate x:Key="Header1ExpanderHeaderTemplate">
+		<TextBlock Text="{Binding}" FontFamily="Arial" FontWeight="Bold" FontSize="10"/>
+	</DataTemplate>
+	
+	<Style x:Key="Header1ExpanderStyle" TargetType="{x:Type Expander}" BasedOn="{StaticResource CalculatorExpanderStyle}">
+		<Setter Property="HeaderTemplate" Value="{StaticResource Header1ExpanderHeaderTemplate}"/>
+	</Style>
+	
+	<DataTemplate x:Key="Header2ExpanderHeaderTemplate">
+		<TextBlock Text="{Binding}" FontFamily="Arial" FontSize="10"/>
+	</DataTemplate>
+	
+	<Style x:Key="Header2ExpanderStyle" TargetType="{x:Type Expander}" BasedOn="{StaticResource CalculatorExpanderStyle}">
+		<Setter Property="HeaderTemplate" Value="{StaticResource Header2ExpanderHeaderTemplate}"/>
+		<Setter Property="Padding" Value="12,0,0,0"/>
+	</Style>
+</ResourceDictionary>

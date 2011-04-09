@@ -1,0 +1,8 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:NorthHorizon.LambdaCalculator.UI.Design">
+	<ResourceDictionary.MergedDictionaries>
+		<ResourceDictionary Source="/NorthHorizon.LambdaCalculator.UI.Design;component/Themes/Generic/Generic.xaml"/>
+	</ResourceDictionary.MergedDictionaries>
+</ResourceDictionary>

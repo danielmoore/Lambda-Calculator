@@ -1,0 +1,94 @@
+﻿%{
+%}
+
+%token PLUS MINUS PRODUCT DIVIDE
+%token CONJ DISJ
+%token LT LTE GT GTE EQ NEQ
+%token INT BOOL UNIT VOID
+%token ARROW
+%token FORALL
+%token DOT COLON PIPE COMMA CARET
+%token <int> INTVAL
+%token <string> VARNAME
+%token TRUE FALSE UNITVAL
+%token INJ CASE OF PROJ
+%token SUB1 SUB2
+%token MU LAMBDA CAPITALLAMBDA
+%token LBRACKET RBRACKET LPAREN RPAREN
+%token EOF
+
+%left POLYABS
+%nonassoc POLYINST
+%left ABS
+%left APP
+%right ARROW
+%nonassoc LT LTE GT GTE EQ NEQ
+%left PLUS MINUS
+%left PRODUCT DIVIDE
+%nonassoc PAREN
+
+%type <Expr> start
+%start start
+
+%%
+
+start: Expr EOF { $1 }
+
+ArithOp:
+| PLUS		{ Add }
+| MINUS		{ Subtract }
+| PRODUCT	{ Multiply }
+| DIVIDE	{ Divide }
+
+BoolOp:
+| CONJ	{ Conjunction }
+| DISJ	{ Disjunction }
+
+CompareOp:
+| LT	{ LessThan }
+| LTE	{ LessThanOrEqual }
+| GT	{ GreaterThan }
+| GTE	{ GreaterThanOrEqual }
+| EQ	{ Equal }
+| NEQ	{ NotEqual }
+
+TypeExpr:
+| INT                           { Int }
+| BOOL							{ Bool }
+| UNIT							{ Unit }
+| VOID							{ Void }
+| TypeExpr ARROW TypeExpr		{ Func ($1, $3) }
+| TypeExpr PRODUCT TypeExpr		{ Prod ($1, $3) }
+| TypeExpr PLUS TypeExpr		{ Sum ($1, $3) }
+| VARNAME						{ TypeVar ($1) }
+| FORALL VARNAME DOT TypeExpr	{ TypeQuant ($2, $4) }
+
+TypedParam: VARNAME COLON TypeExpr { ($1, $3) }
+
+Expr:
+| LPAREN Expr RPAREN  %prec PAREN					{ $2 }
+| INTVAL											{ IntVal $1 }
+| VARNAME											{ Var $1 }
+| LAMBDA TypedParam DOT Expr %prec ABS				{ Abs ($2, $4) }
+| Expr Expr  %prec APP								{ App ($1, $2) }
+| TRUE												{ True }
+| FALSE												{ False }
+| UNITVAL											{ UnitVal }
+| Expr ArithOp Expr									{ ArithOp ($1, $2, $3) }
+| Expr BoolOp Expr									{ BoolOp ($1, $2, $3) }
+| Expr CompareOp Expr								{ Comparison ($1, $2, $3) }
+| LPAREN Expr COMMA Expr RPAREN						{ Pair ($2, $4) }
+| PROJ SUB1 Expr									{ Proj (1, $3) }
+| PROJ SUB2 Expr									{ Proj (2, $3) }
+| INJ SUB1 CARET LPAREN TypeExpr
+  PLUS TypeExpr RPAREN Expr							{ Inj (1, ($5, $7), $9) }
+| INJ SUB2 CARET LPAREN TypeExpr
+  PLUS TypeExpr RPAREN Expr							{ Inj (2, ($5, $7), $9) }
+| CASE Expr OF INJ SUB1 LPAREN VARNAME RPAREN
+  ARROW Expr PIPE INJ SUB2 LPAREN VARNAME RPAREN
+  ARROW Expr										{ Case ($2, ($7, $10), ($15, $18)) }
+| MU TypedParam DOT Expr %prec ABS					{ FixPoint ($2, $4) }
+| CAPITALLAMBDA VARNAME DOT Expr %prec POLYABS		{ PolyAbs ($2, $4) }
+| Expr LBRACKET TypeExpr RBRACKET  %prec POLYINST	{ PolyInst ($1, $3) }
+
+%%

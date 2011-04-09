@@ -1,0 +1,57 @@
+﻿<UserControl
+	x:Class="NorthHorizon.LambdaCalculator.UI.Modules.Calculator.CalculatorView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:l="http://schemas.northhorizon.net/lambdacalculator/library"
+	xmlns:avedit="http://icsharpcode.net/sharpdevelop/avalonedit">
+	<UserControl.Resources>
+		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+				<ResourceDictionary Source="/NorthHorizon.LambdaCalculator.UI.Design;component/Resources/Global.xaml"/>
+			</ResourceDictionary.MergedDictionaries>
+		</ResourceDictionary>
+	</UserControl.Resources>
+	<UserControl.CommandBindings>
+		<CommandBinding Command="l:CalculatorCommands.InputCharacter" Executed="OnInputCharacterExecuted"/>
+	</UserControl.CommandBindings>
+	
+	<StackPanel>
+		<l:ResizableControl MinHeight="70" Height="80">
+			<DockPanel>
+				<ToolBarTray DockPanel.Dock="Top">
+					<ToolBar>
+						<ComboBox ItemsSource="{Binding Languages}"
+								  SelectedItem="{Binding SelectedLanguage}"
+								  Width="120"/>
+
+						<Button Content="Execute" Command="{Binding ExecuteCommand}"/>
+					</ToolBar>
+				</ToolBarTray>
+								
+				<l:ExtendedTextBox
+					Text="{Binding Script, UpdateSourceTrigger=PropertyChanged}"
+					FontFamily="Consolas" AcceptsReturn="True" AcceptsTab="True"
+					SelectionStart="{Binding ScriptCaretPosition, Mode=TwoWay}"
+					TextChanged="ExtendedTextBox_TextChanged"
+					VerticalScrollBarVisibility="Auto" FontSize="16" Padding="2,5"/>
+			</DockPanel>
+		</l:ResizableControl>
+		
+		<Expander
+			Header="Output" Style="{StaticResource Header1ExpanderStyle}"
+			Visibility="{Binding Output, Converter={StaticResource StringToVisibilityConverter}}">
+			<l:ResizableControl MinHeight="20" Height="40">
+				<TextBox IsReadOnly="True" Text="{Binding Output, Mode=OneWay}" FontFamily="Consolas" TextWrapping="Wrap"/>
+			</l:ResizableControl>
+		</Expander>
+		
+		<Expander Header="Characters" Style="{StaticResource Header1ExpanderStyle}">
+			<l:ResizableControl MinHeight="40" Height="80">
+				<ScrollViewer  VerticalScrollBarVisibility="Auto">
+					<ItemsControl ItemsSource="{Binding CharacterSet.Groups}" DockPanel.Dock="Bottom"
+								  Style="{StaticResource CharacterSetItemsControlStyle}"/>
+				</ScrollViewer>
+			</l:ResizableControl>
+		</Expander>
+	</StackPanel>
+</UserControl>
